@@ -1,0 +1,199 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/tim-smart/node-closure#readme"
+
+    >closure-compiler (v0.2.12)</a>
+</h1>
+<h4>Bindings to Google's Closure Compiler</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.closure-compiler">module closure-compiler</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.closure-compiler.compile">
+            function <span class="apidocSignatureSpan">closure-compiler.</span>compile
+            <span class="apidocSignatureSpan">(input, options, callback)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">closure-compiler.</span>OPTIONS</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">closure-compiler.</span>JAR_PATH</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">closure-compiler.</span>JAVA_PATH</span>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.closure-compiler" id="apidoc.module.closure-compiler">module closure-compiler</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.closure-compiler.compile" id="apidoc.element.closure-compiler.compile">
+        function <span class="apidocSignatureSpan">closure-compiler.</span>compile
+        <span class="apidocSignatureSpan">(input, options, callback)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">compile = function (input, options, callback) {
+  var args, compiler, result, stderr, stdout;
+  if (&#x27;function&#x27; === typeof options) {
+    callback = options;
+    options = OPTIONS;
+  } else {
+    result = {};
+    Object.keys(OPTIONS).forEach(function(key) {
+      return result[key] = OPTIONS[key];
+    });
+    Object.keys(options).forEach(function(key) {
+      return result[key] = options[key];
+    });
+    options = result;
+  }
+  args = [];
+  if (!options.jar) {
+    options.jar = JAR_PATH;
+  }
+  args.push(&#x27;-jar&#x27;);
+  args.push(options.jar);
+  delete options.jar;
+  Object.keys(options).forEach(function(key) {
+    var i, len, val, value;
+    value = options[key];
+    if (Array.isArray(value)) {
+      for (i = 0, len = value.length; i &#x3c; len; i++) {
+        val = value[i];
+        args.push(&#x22;--&#x22; + key);
+        args.push(val);
+      }
+      return;
+    }
+    if (typeof value === &#x27;boolean&#x27; &#x26;&#x26; value === false) {
+      return;
+    }
+    args.push(&#x22;--&#x22; + key);
+    if (value !== true) {
+      return args.push(value);
+    }
+  });
+  compiler = spawn(JAVA_PATH, args);
+  stdout = &#x27;&#x27;;
+  stderr = &#x27;&#x27;;
+  compiler.stdout.setEncoding(&#x27;utf8&#x27;);
+  compiler.stderr.setEncoding(&#x27;utf8&#x27;);
+  compiler.stdout.on(&#x27;data&#x27;, function(data) {
+    return stdout += data;
+  });
+  compiler.stderr.on(&#x27;data&#x27;, function(data) {
+    return stderr += data;
+  });
+  compiler.on(&#x27;exit&#x27;, function(code) {
+    var error;
+    if (code !== 0) {
+      error = new Error(stderr);
+      error.code = code;
+    } else {
+      error = null;
+    }
+    return callback(error, stdout, stderr);
+  });
+  return compiler.stdin.end(input);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  }
+
+function aftercompile (err, stdout, stderr) {
+  if (err) throw err
+  var mycompiledcode = stdout
+}
+
+cc.<span class="apidocCodeKeywordSpan">compile</span>(fs.readFileSync(&#x27;lib/index.js&#x27;), options, aftercompile)
+
+// The same as:
+// $ java -jar path/to/closure.jar --some &#x22;flag&#x22; --values &#x22;1&#x22; --values &#x22;2&#x22;
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
