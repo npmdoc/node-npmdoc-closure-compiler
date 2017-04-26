@@ -1,6 +1,6 @@
 # npmdoc-closure-compiler
 
-#### api documentation for  [closure-compiler (v0.2.12)](https://github.com/tim-smart/node-closure#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-closure-compiler.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-closure-compiler) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-closure-compiler.svg)](https://travis-ci.org/npmdoc/node-npmdoc-closure-compiler)
+#### basic api documentation for  [closure-compiler (v0.2.12)](https://github.com/tim-smart/node-closure#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-closure-compiler.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-closure-compiler) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-closure-compiler.svg)](https://travis-ci.org/npmdoc/node-npmdoc-closure-compiler)
 
 #### Bindings to Google's Closure Compiler
 
@@ -59,7 +59,8 @@
         "url": "git://github.com/tim-smart/node-closure.git"
     },
     "scripts": {},
-    "version": "0.2.12"
+    "version": "0.2.12",
+    "bin": {}
 }
 ```
 
